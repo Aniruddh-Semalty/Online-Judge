@@ -1,20 +1,32 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors"
+
 const app=express();
 const PORT =3000;
-
+app.use(cors());
 app.use(express.json());
 
+
 app.get("/",(req,res)=>{
-    res.send("Hi from dashboard");
 
 
 })
 
 app.get("/login",(req,res)=>{
-    res.send("hi from login")
+    res.json({
+        "message":"hi from req"
+    })
+})
+app.post("/login",(req,res)=>{
+      const {username,password}=req.body.data;
+       console.log(username,password);
+    res.json({"message":"Form submitted successfully"});
 
-});
+
+})
+
+
 
 
 app.get("/signup",(req,res)=>{
