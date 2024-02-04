@@ -1,0 +1,25 @@
+.link{
+    color:white;
+    text-decoration: none;
+}
+
+.navbar-container{
+    display:flex;
+    justify-content: space-between;
+    background-color:rgb(33,37,41);
+    color:white;
+    align-items:center;
+
+}
+.navbar-links-container{
+    display:flex;
+    justify-content: space-between;
+}
+
+.navbar-links-container>div{
+    margin:10px 20px;
+}
+.navbar-brand-container{
+    font-size:2rem;
+    margin:10px 20px;
+}
