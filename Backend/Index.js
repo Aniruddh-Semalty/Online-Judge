@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors"
+import {User} from "./Models/UserModel.js"
 
 const app=express();
 const PORT =3000;
@@ -8,10 +9,20 @@ app.use(cors());
 app.use(express.json());
 
 
+
 app.get("/",(req,res)=>{
 
+    const user=new User({username:"Aniruddh",password:"1234s"});
+    user.save().then(()=>{
+        console.log("user saved");
+    })
+    res.status(200).json({"msg":"USer saved"});
 
 })
+
+// app.post("/register",(req,res)=>{
+    
+// })
 
 app.get("/login",(req,res)=>{
     res.json({
