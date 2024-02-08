@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import Leaderboard from "./Leaderboard";
 import Problems from "./Problems";
 import Error from "./Error";
+import { Signup } from "./Signup";
  function App() {
   return (
     <div>
@@ -38,6 +39,9 @@ import Error from "./Error";
       {
         path:"/problems",
         element:<Problems/>
+      },{
+        path:"/signup",
+        element:<Signup/>
       }
 
     ]

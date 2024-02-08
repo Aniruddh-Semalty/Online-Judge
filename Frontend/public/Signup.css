@@ -1,0 +1,38 @@
+.signup-container{
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-form-container{
+    border: 2px solid rgb(205, 201, 201);
+    border-radius: 10px;
+    
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+.box-border{
+    height: 30px;
+    border: 0.5px solid rgb(139, 135, 135);
+    border-radius: 3px;
+}
+
+label{
+    font-size:.7rem;
+}
+
+input.form-control,input.form-control:foucus{
+    background: color #f0f0f0;
+}
+
+.error{
+    position:absolute;
+    color:red;
+    font-size: .6rem;
+}
