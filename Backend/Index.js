@@ -1,68 +1,54 @@
 import express from "express";
-import bodyParser from "body-parser";
-import cors from "cors"
-import dotenv from 'dotenv'
+
+import cors from "cors";
+import dotenv from "dotenv";
 dotenv.config();
-const app=express();
-const PORT =process.env.PORT;
+const app = express();
+const PORT = process.env.PORT;
 app.use(cors());
 app.use(express.json());
-import User from "./Models/UserSchema.js";
+import User from "./Models/User.js";
 
 
-app.get("/",(req,res)=>{
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body.data;
+  console.log(username, password);
+  const response = await User.find({ userName: username, password: password });
+  console.log(response);
+  if (response.length === 0) {
+    res
+      .status(400)
+      .json({ message: "Invalid User!Please check your email and password" });
+  } else {
+    res.status(200).json({ message: " logged in successfully" });
+  }
+});
 
-    try{
-    const user=new User({username:"Abhishek",password:"1234",fullName:"Aniruddh Semalty"});
-    user.save().then(()=>{
-        console.log("user saved");
-    })
-    res.status(200).json({"msg":"USer saved"});
-    }
-    catch(error)
-    {
-        res.status(400).json({"error":error})
-    }
-   
 
-})
+app.post("/signup", async (req, res) => {
+  const { firstName, lastName, userName, email, password } = req.body.values;
 
-// app.post("/register",(req,res)=>{
+  const user = new User({
+    firstName,
+    lastName,
+    userName,
+    email,
+    password,
+  });
+  console.log(user);
+  await user.save().then(() => {
+    res.send("User registered successfully");
+  });
+});
+
+
+//problems router
+app.get("/problems",async(req,res)=>{
     
-// })
-
-app.get("/login",(req,res)=>{
-    res.json({
-        "message":"hi from login"
-    })
-})
-app.post("/login",async(req,res)=>{
-    //   const {username,password}=req.body.data;
-      const response=await User.find({username:"Aniruddh",password:"1234s"})
-      if(response.length==0)
-      {
-        return res.status(400).send({message:"Invalid User!Please check your email and password" })
-      }
-       res.status(200).send({message:" logged in successfully"});
-})
+});
 
 
 
-
-app.post("/signup",(req,res)=>{
-    const response=req.body.values;
-    console.log(response);
-
-})
-
-app.get("/signup",(req,res)=>{
-    res.send("hi from signup")
-
-})
-
-
-app.listen(PORT,()=>{
-    console.log("App is running ");
-})
-
-
+app.listen(PORT, () => {
+  console.log("App is running ");
+});

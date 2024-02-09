@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "../../public/Login.css";
 import axios from "axios";
-const base_url = "http://localhost:3000/";
+
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -11,16 +11,17 @@ export default function Login() {
       username: username,
       password: password,
     };
-    axios
-      .post(base_url + "login", {
-        data,
-      })
-      .then((response) => {
-        console.log(response);
-      }),
-      (error) => {
-        console.log(error);
-      };
+    try{
+    const response = await axios.post("http://localhost:3000/login", {
+      data,
+    });
+    }
+    catch(error)
+    {
+      console.log("User is not registered");
+    }
+
+    
   }
 
   return (
