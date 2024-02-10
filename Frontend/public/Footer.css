@@ -2,10 +2,10 @@ footer {
     
     color:white;
     background-color: rgb(33,37, 41);
+    
+    width:100%;
     bottom: 0;
-    left: 0;
-    right: 0;
-    margin-top:auto;
+    margin-top:10px;
     padding: 8px;
     text-align: center;
   }

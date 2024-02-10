@@ -1,0 +1,49 @@
+.problempage-container{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    border: 10px black solid;
+   
+  
+    
+
+}
+.problempage-inner-container{
+    text-align:center;
+    border: 10px black solid;
+    display:flex;
+    width:50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.name-inputbox{
+    width:500px;
+    height:50px;
+}
+
+.difficulty-selectbox{
+    width:100px;
+    height:30px;
+}
+.problem-statement-inputbox{
+  
+    height:600px;
+    width:100%;
+    
+
+}
+.problem-statement-container{
+    width:100%;
+}
+.problem-statement-label-container{
+    width:100%;
+}
+.code-inputbox{
+    
+    height:600px;
+    width:500px;
+}
+
+

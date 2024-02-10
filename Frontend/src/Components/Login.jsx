@@ -15,6 +15,7 @@ export default function Login() {
     const response = await axios.post("http://localhost:3000/login", {
       data,
     });
+    console.log(response);
     }
     catch(error)
     {

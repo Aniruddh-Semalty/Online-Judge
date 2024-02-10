@@ -1,4 +1,4 @@
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 import dotenv from "dotenv"
 dotenv.config();
 mongoose.connect(process.env.MONGO_URL);
@@ -10,5 +10,5 @@ mongoose.connect(process.env.MONGO_URL);
     Code:{type:String,required:true}
 })
 
- const Problem=Model("Problems",ProblemSchema);
+ const Problem=model("Problems",ProblemSchema);
 export default Problem;

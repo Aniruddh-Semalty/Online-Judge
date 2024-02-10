@@ -8,12 +8,13 @@ import Leaderboard from "./Leaderboard";
 import Problems from "./Problems";
 import Error from "./Error";
 import { Signup } from "./Signup";
+import PostProblems from "./PostProblems";
  function App() {
   return (
     <div>
       <Header />
       <Outlet/>
-      <Footer/>
+        <Footer/>
     </div>
   );
 }
@@ -42,6 +43,9 @@ import { Signup } from "./Signup";
       },{
         path:"/signup",
         element:<Signup/>
+      },{
+        path:"/addproblem",
+        element:<PostProblems/>
       }
 
     ]
