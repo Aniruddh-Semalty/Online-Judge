@@ -1,18 +1,25 @@
 import { Router } from "express";
-import User from "../Models/User.js";
-const loginRouter=Router();
+import User from "../Models/user.model.js";
+const loginRouter = Router();
 loginRouter.post("/", async (req, res) => {
-    const { username, password } = req.body.data;
-    console.log(username, password);
-    const response = await User.find({ userName: username, password: password });
-    
-    if (response.length === 0) {
-      res
-        .status(400)
-        .json({ message: "Invalid User!Please check your email and password" });
-    } else {
-      res.status(200).json({ message: " logged in successfully" });
-    }
-  });
+  const { username, password } = req.body.data;
 
-  export default loginRouter;
+  const isUserExist = await User.findOne({ userName: username });
+
+  if (isUserExist) {
+    const isPasswordCorrect = await isUserExist.isPasswordCorrect(password);
+    if (isPasswordCorrect) {
+      return res
+        .status(200)
+        .json({ username, message: "logged in successfully" });
+    } else {
+      res.status(400).json({ message: "Please check your password" });
+    }
+  } else {
+    res
+      .status(401)
+      .json({ message: "Invalid user please check your username or password" });
+  }
+});
+
+export default loginRouter;

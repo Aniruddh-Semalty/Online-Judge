@@ -1,5 +1,5 @@
 import { Router } from "express";
-import User from "../Models/User.js";
+import User from "../Models/user.model.js";
 const signupRouter=Router();
 signupRouter.post("/",async(req,res)=>{
 const { firstName, lastName, userName, email, password } = req.body.values;

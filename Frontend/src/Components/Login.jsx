@@ -19,7 +19,7 @@ export default function Login() {
     }
     catch(error)
     {
-      console.log("User is not registered");
+      console.log(error);
     }
 
     

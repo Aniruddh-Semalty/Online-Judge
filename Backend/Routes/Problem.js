@@ -1,5 +1,5 @@
 import {Router} from "express";
-import Problem from "../Models/Problem.js";
+import Problem from "../Models/problem.model.js";
 
 
 const problemRouter=Router();
