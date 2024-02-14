@@ -4,9 +4,10 @@ import axios from "axios";
 import { useFormik } from "formik";
 
 import "../../public/Signup.css";
-import { SignupSchema } from "./validation/index.jsx";
-
+import { SignupSchema } from "./validation/signupSchema.jsx";
+import { useNavigate } from "react-router-dom";
 export const Signup = () => {
+  const navigate=useNavigate();
   const initialUserData = {
     firstName: "",
     lastName: "",
@@ -26,6 +27,7 @@ export const Signup = () => {
             values,
           });
           console.log(response);
+          navigate("/login");
         } catch (e) {
           console.log(e);
         }

@@ -1,76 +1,86 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React from "react";
+import { useFormik } from "formik";
+import { loginSchema } from "./validation/loginSchema.jsx";
 import "../../public/Login.css";
 import axios from "axios";
+import {useNavigate,Link} from "react-router-dom";
 
+import "../../public/Signup.css";
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  async function sendData() {
-    const data = {
-      username: username,
-      password: password,
-    };
-    try{
-    const response = await axios.post("http://localhost:3000/login", {
-      data,
-    });
-    console.log(response);
-    }
-    catch(error)
-    {
-      console.log(error);
-    }
+  const navigate=useNavigate();
+  const initialUserData = {
+    userName: "",
+    password: "",
+  };
 
-    
-  }
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialUserData,
+      validationSchema: loginSchema,
+      onSubmit: async (values, action) => {
+        try {
+          const response = await axios.post("http://localhost:3000/login", {
+            values,
+          });
+          console.log(response);
+          navigate("/");
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    });
 
   return (
-    <div className="form-container">
-      <form method="post">
-        <div className="login-form-container">
-          <div className="mb-4 ">
-            <label>
-              Username
-              <br />
-              <input
-                type="text"
-                id="username"
-                className="box-border mt-2"
-                placeholder="Enter username"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-            </label>
-          </div>
-          <div className="mb-4">
-            <label>
-              Password
-              <br />
-              <input
-                type="password"
-                id="pass"
-                className="box-border mt-2"
-                placeholder="Enter password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </label>
-          </div>
-          <div>
-            <input
-              type="button"
-              className="btn btn-primary"
-              value="login"
-              onClick={() => {
-                sendData();
-              }}
-            />
+    <section>
+      <form onSubmit={handleSubmit}>
+        <div className="form-container">
+          <div className="login-form-container">
+            <div className="mb-4 ">
+              <label>
+                Username
+                <br />
+                <input
+                  type="text"
+                  name="userName"
+                  className="box-border mt-2"
+                  placeholder="Enter username"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.userName}
+                />
+              </label>
+              {errors.userName && touched.userName ? (
+                <p className="form-error">{errors.userName}</p>
+              ) : null}
+            </div>
+            <div className="mb-4">
+              <label>
+                Password
+                <br />
+                <input
+                  type="password"
+                  name="password"
+                  className="box-border mt-2"
+                  placeholder="Enter password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </label>
+              {errors.password && touched.password ? (
+                <p className="form-error">{errors.password}</p>
+              ) : null}
+            </div>
+            <div>
+              <input type="submit" className="btn btn-primary" value="login" />
+            </div>
+            <div>
+                <Link to="/signup" ><div className="mt-4">New here?Signup</div></Link>
+            </div>
           </div>
         </div>
       </form>
-    </div>
+    </section>
   );
 }

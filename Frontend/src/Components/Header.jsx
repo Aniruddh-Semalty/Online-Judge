@@ -11,6 +11,8 @@ export default function Header(){
             <div><Link to="/" className="link">Dashboard</Link></div>
             <div><Link to="/problems" className="link">Problems</Link></div>
             <div><Link to="/Leaderboard" className="link">Leaderboard</Link></div>
+            
+            <div><Link to="/login" className="link">Login</Link></div>
           </div>
         
        </div>

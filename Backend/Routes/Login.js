@@ -2,16 +2,16 @@ import { Router } from "express";
 import User from "../Models/user.model.js";
 const loginRouter = Router();
 loginRouter.post("/", async (req, res) => {
-  const { username, password } = req.body.data;
+  const { userName, password } = req.body.values;
 
-  const isUserExist = await User.findOne({ userName: username });
+  const isUserExist = await User.findOne({ userName: userName });
 
   if (isUserExist) {
     const isPasswordCorrect = await isUserExist.isPasswordCorrect(password);
     if (isPasswordCorrect) {
-      return res
+        return res
         .status(200)
-        .json({ username, message: "logged in successfully" });
+        .json({ userName, message: "logged in successfully" });
     } else {
       res.status(400).json({ message: "Please check your password" });
     }
