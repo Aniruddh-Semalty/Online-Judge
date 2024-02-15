@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect,useState } from "react";
+import {Link} from  "react-router-dom"
 const Problems=()=>{
     const [problems,setProblems]=useState([]);
     useEffect(()=>{
@@ -13,11 +14,12 @@ const Problems=()=>{
          setProblems(()=>{
         return fetchedProblems;
         });
-        console.log(problems);
+      
         
     }
+    
 
-    return problems.length==0?(<div>Fetching problems please wait</div>):(
+    return (
         
         <div>
         
@@ -31,7 +33,9 @@ const Problems=()=>{
 }
 
 const DisplayProblem=({details})=>{
+    
     return (
+        <Link to={`/problem/${details._id}`}>
         <div>
             <div>
                 <h2>{details.Name}</h2>
@@ -41,6 +45,7 @@ const DisplayProblem=({details})=>{
                 </div>
             </div>
         </div>
+        </Link>
     )
 }
 export default Problems;

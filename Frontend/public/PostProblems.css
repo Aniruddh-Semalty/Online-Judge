@@ -3,7 +3,7 @@
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    border: 10px black solid;
+   
    
   
     
@@ -11,7 +11,7 @@
 }
 .problempage-inner-container{
     text-align:center;
-    border: 10px black solid;
+   
     display:flex;
     width:50%;
     flex-direction: column;
@@ -29,7 +29,7 @@
 }
 .problem-statement-inputbox{
   
-    height:600px;
+    height:400px;
     width:100%;
     
 
@@ -43,7 +43,7 @@
 .code-inputbox{
     
     height:600px;
-    width:500px;
+    width:680px;
 }
 
 

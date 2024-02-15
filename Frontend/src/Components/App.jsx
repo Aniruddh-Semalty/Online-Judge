@@ -5,10 +5,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "../Components/Home";
 import Footer from "./Footer";
 import Leaderboard from "./Leaderboard";
-import Problems from "./Problems";
 import Error from "./Error";
 import { Signup } from "./Signup";
 import PostProblems from "./PostProblems";
+
+import { lazy, Suspense } from "react";
+
+const Problems=lazy(()=>import("./Problems"));
+
+const GetProblem=lazy(()=>import("./GetProblem"));
+
  function App() {
   return (
     <div>
@@ -39,8 +45,21 @@ import PostProblems from "./PostProblems";
       },
       {
         path:"/problems",
-        element:<Problems/>
-      },{
+
+        element:(
+          <Suspense fallback={<h1>Loading...</h1>}>
+           <Problems/>
+        </Suspense>)
+      },
+      {
+        path:"/problem/:problemId",
+        element:(
+        <Suspense fallback={<h1>Loading...</h1>}>
+        <GetProblem/>
+        </Suspense>
+        )
+      }
+      ,{
         path:"/signup",
         element:<Signup/>
       },{
