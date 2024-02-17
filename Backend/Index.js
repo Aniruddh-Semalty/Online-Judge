@@ -10,6 +10,9 @@ import signupRouter from "./Routes/Signup.js";
 
 import problemRouter from "./Routes/Problem.js";
 
+import runProblemRouter from "./Routes/runProblem.js"
+import { urlencoded } from "express";
+
 const app = express();
 
 const PORT = process.env.PORT;
@@ -19,6 +22,7 @@ dotenv.config();
 app.use(cors());
 
 app.use(express.json());
+app.use(urlencoded({extended:true}));
 
 
 app.use("/login",loginRouter);
@@ -26,6 +30,8 @@ app.use("/login",loginRouter);
 app.use("/signup",signupRouter);
 
 app.use("/problem",problemRouter);
+
+app.use("/problem/run",runProblemRouter);
 
 
 
