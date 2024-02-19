@@ -6,7 +6,8 @@ import { cleanup } from "../utils/cleanup.js";
 import executeCpp from "../utils/executecpp.js";
 
 router.post("/", async (req, res) => {
-  const { language = "cpp", code } = req.body;
+  const { language = "cpp", code,inputs=null } = req.body;
+
   if (code === undefined || code === "") {
     res
       .status(404)
@@ -20,10 +21,10 @@ router.post("/", async (req, res) => {
 
   let output = undefined;
   if (language == "cpp") {
-    output = await executeCpp(filePath, language);
+    output = await executeCpp(filePath,inputs);
     await cleanup();
   } else {
-    output = await executeFile(filePath, language);
+    output = await executeFile(filePath, language,inputs);
   }
 
   res.status(200).json({ output });

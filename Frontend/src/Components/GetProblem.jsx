@@ -1,6 +1,7 @@
 import React ,{useEffect,useState}from 'react'
 import { useParams } from 'react-router-dom'
 import axios from "axios";
+import Playground from './Playground';
 function GetProblem() {
   const [problemName,setProblemName]=useState("");
   const [problemStatement,setProblemStatement]=useState("");
@@ -26,6 +27,9 @@ function GetProblem() {
         <h1>{problemName}</h1>
         <h2>{problemDifficulty}</h2>
         <h3>{problemStatement}</h3>
+      </div>
+      <div>
+        <Playground/>
       </div>
     </div>
   )
