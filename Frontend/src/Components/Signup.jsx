@@ -1,9 +1,10 @@
-import("../../public/Signup.css");
+
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 import { useFormik } from "formik";
 
-import "../../public/Signup.css";
+
 import { SignupSchema } from "./validation/signupSchema.jsx";
 import { useNavigate } from "react-router-dom";
 export const Signup = () => {
@@ -36,13 +37,11 @@ export const Signup = () => {
   return (
     <section>
       <form onSubmit={handleSubmit}>
-        <div className="signup-container">
-          <div className="signup-form-container">
-            <label className="mb-2">
-              FirstName
-              <br />
-              <input
-                className="box-border mt-2"
+        <div className="flex justify-center items-center my-6 ">
+          <div className=" border p-16 w-[400px] border-white flex flex-col justify-center items-center bg-gray-200 rounded-md ">
+            <label className="w-full">
+            <input
+                className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
                 autoComplete="off"
                 onChange={handleChange}
                 name="firstName"
@@ -51,15 +50,15 @@ export const Signup = () => {
                 value={values.firstName}
                 onBlur={handleBlur}
               />
-            </label>
+              </label>
+          
             {errors.firstName && touched.firstName ? (
               <p className="form-error">{errors.firstName}</p>
             ) : null}
-            <label className="mb-2">
-              LastName
-              <br />
+            <label className="w-full" >
+             
               <input
-                className="box-border mt-2"
+                 className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
                 placeholder="last name"
                 type="text"
                 autoComplete="off"
@@ -72,11 +71,10 @@ export const Signup = () => {
             {errors.lastName && touched.lastName ? (
               <p className="form-error">{errors.lastName}</p>
             ) : null}
-            <label className="mb-2">
-              UserName
-              <br />
+            <label className="w-full" >
+             
               <input
-                className="box-border mt-2"
+                 className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
                 placeholder="User name"
                 type="text"
                 autoComplete="off"
@@ -89,11 +87,10 @@ export const Signup = () => {
             {errors.userName && touched.userName ? (
               <p className="form-error">{errors.userName}</p>
             ) : null}
-            <label className="mb-2">
-              Enter Email
-              <br />
+            <label className="w-full">
+           
               <input
-                className="box-border mt-2"
+                className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
                 placeholder="Email Id"
                 type="text"
                 autoComplete="off"
@@ -102,15 +99,14 @@ export const Signup = () => {
                 value={values.email}
                 onBlur={handleBlur}
               />
-            </label>
+            </label >
             {errors.email && touched.email ? (
               <p className="form-error">{errors.email}</p>
             ) : null}
-            <label className="mb-2">
-              Enter password
-              <br />
+            <label className="w-full" >
+            
               <input
-                className="box-border mt-2"
+                 className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
                 placeholder="Password"
                 type="password"
                 autoComplete="off"
@@ -123,11 +119,10 @@ export const Signup = () => {
             {errors.password && touched.password ? (
               <p className="form-error">{errors.password}</p>
             ) : null}
-            <label className="mb-2">
-              Confirm password
-              <br />
+            <label className="w-full">
+            
               <input
-                className="box-border mt-2"
+                 className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
                 type="password"
                 autoComplete="off"
                 onChange={handleChange}
@@ -140,8 +135,17 @@ export const Signup = () => {
             {errors.confirmPassword && touched.confirmPassword ? (
               <p className="form-error">{errors.confirmPassword}</p>
             ) : null}
-            <input type="submit" value="Submit" />
-            <input type="reset" value="Reset" />
+            <div className="w-full">
+            <input type="submit"  className="bg-[#202020] text-[#F0F0F0] w-full h-10 rounded-lg my-4 " value="Sign up" />
+            </div>
+            <div>
+            <Link
+                to="/login"
+                className="no-underline text-gray-600 shadow-lg"
+              >
+                <div className="">Have an account ? <span className="text-[#202020]">Signin</span></div>
+              </Link>
+            </div>
           </div>
         </div>
       </form>

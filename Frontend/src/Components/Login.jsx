@@ -2,13 +2,13 @@
 import React from "react";
 import { useFormik } from "formik";
 import { loginSchema } from "./validation/loginSchema.jsx";
-import "../../public/Login.css";
-import axios from "axios";
-import {useNavigate,Link} from "react-router-dom";
 
-import "../../public/Signup.css";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+
+
 export default function Login() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const initialUserData = {
     userName: "",
     password: "",
@@ -34,17 +34,15 @@ export default function Login() {
   return (
     <section>
       <form onSubmit={handleSubmit}>
-        <div className="form-container">
-          <div className="login-form-container">
-            <div className="mb-4 ">
-              <label>
-                Username
-                <br />
+        <div className="flex justify-center items-center m-20">
+          <div className=" border p-16 w-[400px] border-white flex flex-col justify-center items-center bg-gray-200 ">
+            <div className="w-full">
+              <label className="w-full">
                 <input
                   type="text"
                   name="userName"
-                  className="box-border mt-2"
-                  placeholder="Enter username"
+                  className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
+                  placeholder="Username or Email"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.userName}
@@ -54,15 +52,13 @@ export default function Login() {
                 <p className="form-error">{errors.userName}</p>
               ) : null}
             </div>
-            <div className="mb-4">
-              <label>
-                Password
-                <br />
+            <div className="w-full">
+              <label className="w-full">
                 <input
                   type="password"
                   name="password"
-                  className="box-border mt-2"
-                  placeholder="Enter password"
+                  className="border  p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
+                  placeholder="Password"
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -72,11 +68,20 @@ export default function Login() {
                 <p className="form-error">{errors.password}</p>
               ) : null}
             </div>
-            <div>
-              <input type="submit" className="btn btn-primary" value="login" />
+            <div className="w-full">
+              <input
+                type="submit"
+                className="bg-[#202020] text-[#F0F0F0] w-full h-10 rounded-lg my-4 "
+                value="Sign in"
+              />
             </div>
             <div>
-                <Link to="/signup" ><div className="mt-4">New here?Signup</div></Link>
+              <Link
+                to="/signup"
+                className="no-underline text-gray-600 shadow-lg"
+              >
+                <div className="">New here ?<span className="text-[#202020]"> Signup</span></div>
+              </Link>
             </div>
           </div>
         </div>

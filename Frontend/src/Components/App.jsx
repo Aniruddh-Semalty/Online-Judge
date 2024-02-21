@@ -1,7 +1,7 @@
 import Login from "./Login";
 import Header from "./Header";
 import { createBrowserRouter,Outlet } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import Home from "../Components/Home";
 import Footer from "./Footer";
 import Leaderboard from "./Leaderboard";
@@ -17,7 +17,7 @@ const GetProblem=lazy(()=>import("./GetProblem"));
 
  function App() {
   return (
-    <div>
+    <div className="w-full">
       <Header />
       <Outlet/>
         <Footer/>
