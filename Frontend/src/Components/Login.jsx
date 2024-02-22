@@ -2,13 +2,15 @@
 import React from "react";
 import { useFormik } from "formik";
 import { loginSchema } from "./validation/loginSchema.jsx";
-
+import {useDispatch} from "react-redux";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { login } from "../../utils/Store/userSlice.js";
 
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch=useDispatch();
   const initialUserData = {
     userName: "",
     password: "",
@@ -24,6 +26,7 @@ export default function Login() {
             values,
           });
           console.log(response);
+          dispatch(login(response.data.userName));
           navigate("/");
         } catch (error) {
           console.log(error);

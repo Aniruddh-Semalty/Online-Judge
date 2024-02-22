@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { exec, spawn } from "child_process";
+import { exec, execSync, spawn } from "child_process";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const executeCpp = async (filePath, inputs) => {
@@ -20,7 +20,7 @@ const executeCpp = async (filePath, inputs) => {
   const outputPath = path.join(cppOutputs, execFile);
   return await new Promise((resolve, reject) => {
     exec(
-      `g++ ${filePath} -o ${outputPath} && cd ${cppOutputs}`,
+      `g++ ${filePath} -o ${outputPath}`,
       (error, stdout, stderr) => {
         if (error) {
           reject(error);
@@ -36,6 +36,7 @@ const executeCpp = async (filePath, inputs) => {
         let result = "";
         child.stdout.on("data", (data) => {
           result += data.toString(); // Convert buffer to string
+          
         });
         child.stdout.on("end", () => {
           resolve(result.trim()); // Resolve with trimmed string
@@ -46,5 +47,3 @@ const executeCpp = async (filePath, inputs) => {
 };
 
 export default executeCpp;
-
-

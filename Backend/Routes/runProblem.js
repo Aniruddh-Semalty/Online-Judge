@@ -1,14 +1,17 @@
 import { Router } from "express";
 const router = Router();
 import generateFile from "../utils/generateFile.js";
-import executeFile from "../utils/executeFile.js";
+import executePy from "../utils/executePy.js";
 import { cleanup } from "../utils/cleanup.js";
 import executeCpp from "../utils/executecpp.js";
+import executeJava from "../utils/executeJava.js";
 
 router.post("/", async (req, res) => {
   const { language = "cpp", code,inputs=null } = req.body;
-
-  if (code === undefined || code === "") {
+ 
+  
+  if (code === undefined || code === "")
+   {
     res
       .status(404)
       .json({
@@ -18,15 +21,21 @@ router.post("/", async (req, res) => {
   }
 
   const filePath = await generateFile(language, code);
-
+  
   let output = undefined;
   if (language == "cpp") {
     output = await executeCpp(filePath,inputs);
     await cleanup();
-  } else {
-    output = await executeFile(filePath, language,inputs);
+   
+  } else if(language=="py") {
+    output = await executePy(filePath, language,inputs);
+  }
+  else{
+    output=await executeJava(filePath,inputs);
+    await cleanup();
   }
 
+  
   res.status(200).json({ output });
 });
 

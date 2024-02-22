@@ -10,6 +10,8 @@ import { Signup } from "./Signup";
 import PostProblems from "./PostProblems";
 
 import { lazy, Suspense } from "react";
+import { Provider } from "react-redux";
+import appStore from "../../utils/Store/appStore";
 
 const Problems=lazy(()=>import("./Problems"));
 
@@ -18,9 +20,11 @@ const GetProblem=lazy(()=>import("./GetProblem"));
  function App() {
   return (
     <div className="w-full">
+      <Provider store={appStore}>
       <Header />
       <Outlet/>
         <Footer/>
+        </Provider>
     </div>
   );
 }

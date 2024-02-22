@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {  useSelector,useDispatch } from 'react-redux';
 const Problems = () => {
   const [problems, setProblems] = useState([]);
+  const user=useSelector((store)=>store.user.userData);
   useEffect(() => {
     fetchProblems();
   }, []);
@@ -16,7 +18,8 @@ const Problems = () => {
     });
   };
 
-  return (
+  
+  return user?(
     <div className="my-20 ">
       {problems.map((prob, index) => {
         return (
@@ -25,9 +28,9 @@ const Problems = () => {
           </div>
         );
       })}
-    </div>
-  );
+    </div>):<div className="font-bold text-3xl p-6">Please login before solving any problem</div>
 };
+;
 
 const DisplayProblem = ({ details, index }) => {
   const difficulty = details.Difficulty.toUpperCase();

@@ -46,27 +46,15 @@ function GetProblem() {
        <p className={textColor}>{difficulty}</p>
         </div>
         </div>
+
         <p className='text-lg '>{problemStatement}</p>
-        <div className="mt-6">
-        {/* Input textarea */}
-        <div className="mb-4">
-          <h2 className="text-lg font-bold mb-2">Input</h2>
-          <textarea
-            rows='6'
-            cols='15'
-          
-            placeholder='Input'
-            
-            className="border border-gray-300 rounded-sm py-1.5 px-4 mb-1 focus:outline-none focus:border-indigo-500 resize-none w-full"
-            style={{ minHeight: '100px' }}
-          ></textarea>
-        </div>
-      </div>
       </div>
       <div className='w-7/12 m-2'>
         <Playground/>
       </div>
-    </div>
+      </div>
+    
+    
    
   )
 }
