@@ -6,6 +6,7 @@ import { exec, execSync, spawn } from "child_process";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const executeCpp = async (filePath, inputs) => {
+ 
   const outputDirPath = path.join(__dirname, "outputs");
 
   if (!fs.existsSync(outputDirPath)) {
@@ -35,7 +36,9 @@ const executeCpp = async (filePath, inputs) => {
         }
         let result = "";
         child.stdout.on("data", (data) => {
-          result += data.toString(); // Convert buffer to string
+          result += data.toString(); 
+          
+         // Convert buffer to string
           
         });
         child.stdout.on("end", () => {

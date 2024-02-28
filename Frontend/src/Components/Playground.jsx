@@ -6,10 +6,15 @@ import { highlight, languages } from "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism.css";
+import {useParams} from "react-router-dom";
+import {  useSelector } from "react-redux"
 
 function Playground() {
   const [language,setLanguage]=useState("cpp");
   const inputRef=useRef();
+  
+  const username=useSelector((store)=>store.user.userData);
+  const {problemId} =useParams();
   const [code, setCode] = React.useState(
     `function add(a, b) {\n  return a + b;\n}`
   );
@@ -24,14 +29,26 @@ function Playground() {
     const response=await axios.post("http://localhost:3000/problem/run",{
         language,
         code,
+        submit:false,
         inputs:inputRef.current.value
     })
-    console.log(response.data.output);
+   
     setTheOutputDiv(response.data.output);
   };
 
+  const submitHandler=async()=>{
+    const response=await axios.post("http://localhost:3000/problem/run",{
+        language,
+        code,
+        probId:problemId,
+        submit:true,
+        username,
+    })
+    console.log(response.data.msg);
+    setTheOutputDiv(response.data.msg);
+  }
+
  
-  
   return (
     <>
     <div >
@@ -66,7 +83,7 @@ function Playground() {
         <button className=" m-2 bg-green-700 text-white rounded-md w-16 h-10" onClick={runClickHandler}>
           Run
         </button>
-        <button className=" m-2 bg-red-700 text-white rounded-md w-16 h-10">
+        <button className=" m-2 bg-red-700 text-white rounded-md w-16 h-10" onClick={submitHandler}>
           Submit
         </button>
       </div>

@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
-import mongoose from "mongoose";
+import mongoose,{Schema} from "mongoose";
 import bcrypt from "bcrypt";
 dotenv.config();
 mongoose.connect(process.env.MONGO_URL);
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     firstName: { type: String, required: [true, "First name is required"] },
     lastName: { type: String, required: [true, "Last name is required"] },
@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       index: true,
     },
+    problemsSolved:[{
+      type:Schema.Types.ObjectId,
+      ref:"Problem",
+      required:true,
+      
+    }]
   },
   {
     timestamps: true,
