@@ -1,6 +1,8 @@
 import {Router} from "express";
 import Problem from "../Models/problem.model.js";
 import testcases from "../Models/testcase.model.js";
+import Submission from "../Models/submission.model.js";
+
 
 const problemRouter=Router();
 problemRouter.get("/",async(req,res)=>{
@@ -21,7 +23,7 @@ problemRouter.get("/:id",async(req,res)=>{
     
     try{
     const problem=await Problem.findOne({_id:probId});
-   
+    const submission=await Submission.findOne({})
     res.status(200).json({
         msg:"success",problemDetails:problem
     })

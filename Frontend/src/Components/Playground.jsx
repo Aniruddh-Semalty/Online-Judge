@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import axios from "axios";
 import Editor from "react-simple-code-editor";
@@ -10,6 +10,9 @@ import {useParams} from "react-router-dom";
 import {  useSelector } from "react-redux"
 
 function Playground() {
+
+
+
   const [language,setLanguage]=useState("cpp");
   const inputRef=useRef();
   
@@ -47,6 +50,11 @@ function Playground() {
     console.log(response.data.msg);
     setTheOutputDiv(response.data.msg);
   }
+
+  useEffect(()=>{
+    const response=axios.post("",{});
+    
+  },[]);
 
  
   return (

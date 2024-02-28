@@ -11,6 +11,8 @@ import signupRouter from "./Routes/Signup.js";
 import problemRouter from "./Routes/Problem.js";
 
 import runProblemRouter from "./Routes/runProblem.js"
+
+import submissionRouter from "./Routes/Submission.js"
 import { urlencoded } from "express";
 
 const app = express();
@@ -32,6 +34,8 @@ app.use("/signup",signupRouter);
 app.use("/problem",problemRouter);
 
 app.use("/problem/run",runProblemRouter);
+
+app.use("/getsubmission",submissionRouter);
 
 
 

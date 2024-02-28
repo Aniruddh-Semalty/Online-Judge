@@ -4,7 +4,7 @@ const submitProblem=async(problemId,username,code)=>{
 const user=await User.findOne({
     userName:username,
 })
-console.log(user._id);
+
 if(user)
 {
 const problemsSolvedArr=user.problemsSolved;
