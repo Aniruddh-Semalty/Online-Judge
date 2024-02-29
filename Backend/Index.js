@@ -14,6 +14,7 @@ import runProblemRouter from "./Routes/runProblem.js"
 
 import submissionRouter from "./Routes/Submission.js"
 import { urlencoded } from "express";
+import leaderboardRouter from "./Routes/Leaderboard.js";
 
 const app = express();
 
@@ -36,6 +37,8 @@ app.use("/problem",problemRouter);
 app.use("/problem/run",runProblemRouter);
 
 app.use("/getsubmission",submissionRouter);
+
+app.use("/leaderboard",leaderboardRouter);
 
 
 
