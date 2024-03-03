@@ -3,7 +3,7 @@ const router = Router();
 import generateFile from "../utils/generateFile.js";
 import executePy from "../utils/executePy.js";
 import { cleanup } from "../utils/cleanup.js";
-import executeCpp from "../utils/executecpp.js";
+import executeCpp from "../utils/executeCpp.js";
 import executeJava from "../utils/executeJava.js";
 import testcases from "../Models/testcase.model.js";
 import submitProblem from "../utils/submitProblem.js";
