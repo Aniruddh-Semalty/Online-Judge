@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../utils/Store/userSlice";
+import Cookies from "js-cookie";
 import { useState } from "react";
 export default function Header() {
   const dispatch = useDispatch();
   const navigate=useNavigate();
   const user = useSelector((store) => store.user.userData);
   const logoutHandler = () => {
+    Cookies.remove("token");
     dispatch(logout(null));
     navigate("/login")
   };

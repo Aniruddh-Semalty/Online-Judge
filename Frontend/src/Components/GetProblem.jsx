@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Playground from "./Playground";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { login } from "../../utils/Store/userSlice";
+import useAuthentication from "../../utils/hooks/useAuthentication";
 import Editor from "react-simple-code-editor";
 import { highlight, languages } from "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
@@ -11,24 +14,31 @@ import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism.css";
 
 function GetProblem() {
+  const user=useSelector((store)=>store.user.userData);
   const [problemName, setProblemName] = useState("");
   const [problemStatement, setProblemStatement] = useState("");
   const [problemDifficulty, setProblemDifficulty] = useState("");
   const [lastSubmission, setLastSubmission] = useState("");
   const [showSubmission, setShowSubmission] = useState(false);
+  const dispatch=useDispatch();
 
   const { problemId } = useParams();
 
-  const username = useSelector((store) => store.user.userData);
+
   useEffect(() => {
+    useAuthentication().then((data)=>{
+    
+    dispatch(login(data));
+    })
     fetchProblem();
   
   }, []);
 
   useEffect(()=>{
     getSubmissionHandler()
+  
   },[showSubmission]);
-
+  const username = useSelector((store) => store.user.userData);
   const fetchProblem = async () => {
     const response = await axios.get(
       `http://localhost:3000/problem/${problemId}`
@@ -50,6 +60,7 @@ function GetProblem() {
     textColor = "text-yellow-700";
   }
   const getSubmissionHandler = async () => {
+    
     const response = await axios.post("http://localhost:3000/getsubmission", {
       username,
       problemId,
@@ -62,7 +73,7 @@ function GetProblem() {
     setShowSubmission(!showSubmission);
   }
 
-  return (
+  return user?(
     <div className="p-2  mb-0 flex justify-between">
       <div className="w-5/12  border-r-2 p-4 h-screen">
         <div className="p-2 flex justify-between items-center my-14 mt-0 ">
@@ -88,23 +99,23 @@ function GetProblem() {
         </div>
         <div className="w-full">
         {showSubmission?
-        <Editor
-          value={lastSubmission}
-          className="h-auto drop-shadow-lg"
-          
-          onValueChange={(code) => setCode(code)}
-          highlight={(code) => highlight(code, languages.js)}
-          padding={10}
-          style={{
-            fontFamily: '"Fira code", "Fira Mono", monospace',
-            fontSize: 12,
-            outline: "none",
-            border: "none",
-            backgroundColor: "#f7fafc",
-            height: "100%",
-            overflowY: "auto",
-          }}
-        />:null}
+          <Editor
+      value={lastSubmission}
+      className="h-auto drop-shadow-lg"
+      onValueChange={(code) => setCode(code)}
+      highlight={(code) => highlight(code, languages.js)}
+      padding={10}
+      style={{
+        fontFamily: '"Fira code", "Fira Mono", monospace',
+        fontSize: 12,
+        outline: "none",
+        border: "none",
+        backgroundColor: "#f7fafc",
+        minHeight: "100px", // Set a minimum height to prevent the editor from collapsing
+        height: "auto", // Set height to auto to allow it to grow dynamically
+        overflowY: "auto",
+      }}
+    />:null}
         </div>
       </div>
 
@@ -112,7 +123,7 @@ function GetProblem() {
         <Playground />
       </div>
     </div>
-  );
+  ):<div className="font-bold text-3xl p-6">Please login before solving any problem</div>;
 }
 
 export default GetProblem;

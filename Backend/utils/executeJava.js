@@ -21,7 +21,7 @@ const executeJava = async (filePath, inputs) => {
   
   
   return await new Promise(async(resolve, reject) => {
-    
+    try{
       execSync(`javac ${filePath} -d ${javaOutputs}`);
       
         const fileName=await getJavaFileName(javaOutputs);
@@ -49,7 +49,11 @@ const executeJava = async (filePath, inputs) => {
               });
             }
            )
-        }))
+        }))}
+        catch(err)
+        {
+          resolve("Error is "+err);
+        }
       
        
       

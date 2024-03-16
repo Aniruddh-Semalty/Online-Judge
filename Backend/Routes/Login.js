@@ -1,7 +1,10 @@
 import { Router } from "express";
 import User from "../Models/user.model.js";
+import createSecretJwtToken from "../utils/secretToken.js";
+
 const loginRouter = Router();
 loginRouter.post("/", async (req, res) => {
+
   const { userName, password } = req.body.values;
 
   const isUserExist = await User.findOne({ userName: userName });
@@ -9,9 +12,16 @@ loginRouter.post("/", async (req, res) => {
   if (isUserExist) {
     const isPasswordCorrect = await isUserExist.isPasswordCorrect(password);
     if (isPasswordCorrect) {
-        return res
+      const token = await createSecretJwtToken(
+        isUserExist._id,
+        isUserExist.userName
+      );
+     
+      
+
+      return res
         .status(200)
-        .json({ userName, message: "logged in successfully" });
+        .json({ userName, message: "logged in successfully" ,token});
     } else {
       res.status(400).json({ message: "Please check your password" });
     }

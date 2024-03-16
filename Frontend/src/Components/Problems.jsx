@@ -2,10 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {  useSelector,useDispatch } from 'react-redux';
+import useAuthentication from "../../utils/hooks/useAuthentication";
+import { login } from "../../utils/Store/userSlice";
 const Problems = () => {
   const [problems, setProblems] = useState([]);
+  const dispatch=useDispatch();
   const user=useSelector((store)=>store.user.userData);
   useEffect(() => {
+    useAuthentication().then((data)=>{
+    
+            dispatch(login(data));
+    })
     fetchProblems();
   }, []);
 

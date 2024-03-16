@@ -8,18 +8,15 @@ import executeJava from "../utils/executeJava.js";
 import testcases from "../Models/testcase.model.js";
 import submitProblem from "../utils/submitProblem.js";
 
-
-
 router.post("/", async (req, res) => {
   const {
-    username=null,
+    username = null,
     probId = null,
     language = "cpp",
     code,
     inputs = null,
     submit,
   } = req.body;
-
 
   if (code === undefined || code === "") {
     res.status(404).json({
@@ -46,12 +43,20 @@ router.post("/", async (req, res) => {
         const inputs = testcasesArr[i];
         const expectedOutput = outputArr[i];
 
-        const output = await executeCpp(filePath, inputs);
+        let output;
+
+        try {
+          output = await executeCpp(filePath, inputs);
+        } catch (err) {
+          await cleanup();
+          return res.status(200).json({ output: err.message });
+        }
 
         if (output.trim() !== expectedOutput.trim()) {
+          await cleanup();
           return res.status(200).json({
             verdict: "failed",
-            msg: `Failed at testcase no. ${
+            output: `Failed at testcase no. ${
               i + 1
             } => Testcase input is ${inputs} .
        Your output  is ${output}. 
@@ -60,13 +65,20 @@ router.post("/", async (req, res) => {
         }
       }
       await cleanup();
-      submitProblem(probId,username,code);
+      submitProblem(probId, username, code);
       return res
         .status(200)
-        .json({ verdict: "success", msg: "All the testcases passed" });
+        .json({ verdict: "success", output: "All the testcases passed" });
     } else {
       //if run button is clicked
-      const output = await executeCpp(filePath, inputs);
+      let output;
+      try {
+        output = await executeCpp(filePath, inputs);
+      } catch (err) {
+        await cleanup();
+        return res.status(200).json({ output: err.message });
+      }
+
       await cleanup();
       res.status(200).json({ output });
     }
@@ -75,13 +87,19 @@ router.post("/", async (req, res) => {
       for (let i = 0; i < testcasesArr.length; i++) {
         const inputs = testcasesArr[i];
         const expectedOutput = outputArr[i];
-
-        const output = await executePy(filePath, inputs);
+        let output;
+        try {
+          output = await executePy(filePath, inputs);
+        } catch (err) {
+          return res
+            .status(200)
+            .json({ output: "Syntax error.Please check your program" });
+        }
 
         if (output.trim() !== expectedOutput.trim()) {
           return res.status(200).json({
             verdict: "failed",
-            msg: `Failed at testcase no. ${
+            output: `Failed at testcase no. ${
               i + 1
             } => Testcase input is ${inputs} .
        Your output  is ${output}. 
@@ -89,13 +107,19 @@ router.post("/", async (req, res) => {
           });
         }
       }
-      submitProblem(probId,username,code);
+      submitProblem(probId, username, code);
       return res
         .status(200)
-        .json({ verdict: "success", msg: "All the testcases passed" });
+        .json({ verdict: "success", output: "All the testcases passed" });
     } else {
-      const output = await executePy(filePath, inputs);
-    
+      let output;
+      try {
+        output = await executePy(filePath, inputs);
+      } catch (err) {
+        return res
+          .status(200)
+          .json({ output: "Syntax error.Please check your program" });
+      }
       res.status(200).json({ output });
     }
   } else {
@@ -105,11 +129,17 @@ router.post("/", async (req, res) => {
         const expectedOutput = outputArr[i];
 
         const output = await executeJava(filePath, inputs);
+        if (output.startsWith("Error")) {
+          const error = output.split("error:")[1];
+          await cleanup();
+          return res.status(200).json({ output: error });
+        }
 
         if (output.trim() !== expectedOutput.trim()) {
+          await cleanup();
           return res.status(200).json({
             verdict: "failed",
-            msg: `Failed at testcase no. ${
+            output: `Failed at testcase no. ${
               i + 1
             } => Testcase input is ${inputs} .
        Your output  is ${output}. 
@@ -118,12 +148,18 @@ router.post("/", async (req, res) => {
         }
       }
       await cleanup();
-      submitProblem(probId,username,code);
+      submitProblem(probId, username, code);
       return res
         .status(200)
-        .json({ verdict: "success", msg: "All the testcases passed" });
+        .json({ verdict: "success", output: "All the testcases passed" });
     } else {
       const output = await executeJava(filePath, inputs);
+      if (output.startsWith("Error")) {
+        const error = output.split("error:")[1];
+        await cleanup();
+
+        return res.status(200).json({ output: error });
+      }
       await cleanup();
       res.status(200).json({ output });
     }

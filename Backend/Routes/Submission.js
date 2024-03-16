@@ -7,6 +7,7 @@ router.post("/",async(req,res)=>{
     
     const {username,problemId}=req.body;
     const user=await User.findOne({userName:username});
+    if(user){
     const userId=user._id;
    
     
@@ -21,5 +22,9 @@ router.post("/",async(req,res)=>{
     else{
         res.status(200).json({submission:"No submission till now for this problem"});
     }
+}
+else{
+    res.status(400).json({message:"Unauthorized access"});
+}
 })
 export default router;

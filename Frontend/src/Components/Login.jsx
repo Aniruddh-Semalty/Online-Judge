@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../utils/Store/userSlice.js";
+import Cookies from "js-cookie"
 
 
 export default function Login() {
@@ -21,11 +22,16 @@ export default function Login() {
       initialValues: initialUserData,
       validationSchema: loginSchema,
       onSubmit: async (values, action) => {
+        
         try {
           const response = await axios.post("http://localhost:3000/login", {
             values,
           });
-          console.log(response);
+          if(response.status==200)
+          {
+           
+            Cookies.set("token",response.data.token,{expires:7,path: '/'});
+          }
           dispatch(login(response.data.userName));
           navigate("/");
         } catch (error) {

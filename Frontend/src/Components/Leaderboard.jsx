@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../utils/Store/userSlice";
+import useAuthentication from "../../utils/hooks/useAuthentication";
 function Leaderboard() {
+  const user=useSelector((store)=>store.user.userData);
   const [userData, setUserData] = useState([]);
-  
+  const dispatch=useDispatch();
   const getAllUsers = async () => {
     try {
       const allUsers = await axios.get("http://localhost:3000/leaderboard");
@@ -16,10 +19,14 @@ function Leaderboard() {
   };
 
   useEffect(() => {
+    useAuthentication().then((data)=>{
+    
+    dispatch(login(data));
+    })
     getAllUsers();
   }, []);
 
-  return userData.length ? (
+  return  user?  (
     <div className="flex justify-center items-center my-10">
       <div className="flex-col h-screen border w-1/2 p-6 bg-[#202020] text-white rounded-lg">
         <div className="flex justify-between text-xl font-bold p-6">
@@ -40,7 +47,7 @@ function Leaderboard() {
         ))}
       </div>
     </div>
-  ) : null;
+  ) :<div className="font-bold text-3xl p-6">Please login to see Leaderboard</div>
 }
 
 export default Leaderboard;

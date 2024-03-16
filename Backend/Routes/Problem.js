@@ -5,7 +5,12 @@ import Submission from "../Models/submission.model.js";
 
 
 const problemRouter=Router();
+
+
 problemRouter.get("/",async(req,res)=>{
+    
+
+    
     try{
         const allProblems=await Problem.find({});
         res.send(allProblems);

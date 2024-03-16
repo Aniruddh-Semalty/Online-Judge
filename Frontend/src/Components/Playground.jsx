@@ -35,7 +35,7 @@ function Playground() {
         submit:false,
         inputs:inputRef.current.value
     })
-   
+    
     setTheOutputDiv(response.data.output);
   };
 
@@ -47,8 +47,8 @@ function Playground() {
         submit:true,
         username,
     })
-    console.log(response.data.msg);
-    setTheOutputDiv(response.data.msg);
+   
+    setTheOutputDiv(response.data.output);
   }
 
   useEffect(()=>{
