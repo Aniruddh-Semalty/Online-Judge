@@ -20,6 +20,7 @@ import submissionRouter from "./Routes/Submission.js";
 import { urlencoded } from "express";
 import leaderboardRouter from "./Routes/Leaderboard.js";
 import authenticationRouter from "./Routes/Authentication.js";
+import userDataRouter from "./Routes/userData.js";
 const app = express();
 
 const PORT = process.env.PORT;
@@ -50,6 +51,7 @@ app.use("/getsubmission", submissionRouter);
 
 app.use("/leaderboard", leaderboardRouter);
 
+app.use("/user",userDataRouter);
 app.listen(PORT, () => {
   console.log("App is running ");
 });

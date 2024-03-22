@@ -1,18 +1,21 @@
 import { useEffect } from "react";
 import useAuthentication from "../../utils/hooks/useAuthentication";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../utils/Store/userSlice";
+import { getRole, login } from "../../utils/Store/userSlice";
+import UserHome from "./UserHome";
+import UnknownHome from "./UnknownHome";
 const Home=()=>{
     const user=useSelector((store)=>store.user.userData);
-    const dispath=useDispatch();
+    const dispatch=useDispatch();
     useEffect(()=>{
         useAuthentication().then((data)=>{
-            dispath(login(data));
+            dispatch(login(data.userName));
+            dispatch(getRole(data.isAdmin))
         })
        
        
     },[]);
    
-    return user?(<div className="text-purple-950"><h1>Home page</h1></div>):<div className="font-bold text-3xl p-6">Please login to see home page</div>
+    return user?(<UserHome/>):(<UnknownHome/>)
 }
 export default Home;

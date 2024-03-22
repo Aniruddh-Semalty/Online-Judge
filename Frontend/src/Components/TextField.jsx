@@ -1,7 +1,7 @@
 import "../../public/Signup.css"
 import { ErrorMessage,useField } from "formik";
 export const TextField=({ label, ...props })=>{
-    console.log(label)
+   
     const [field,meta]=useField(props);
     return (
         <div className="mb-2">

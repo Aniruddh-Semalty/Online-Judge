@@ -6,12 +6,13 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 export default function Header() {
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const user = useSelector((store) => store.user.userData);
+  const userIsAdmin = useSelector((store) => store.user.isAdmin);
   const logoutHandler = () => {
     Cookies.remove("token");
     dispatch(logout(null));
-    navigate("/login")
+    navigate("/login");
   };
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen); // Toggle dropdown visibility
@@ -25,30 +26,48 @@ export default function Header() {
         </Link>
       </div>
       <div className="flex items-center justify-between ">
-        <div>
-          <Link
-            to="/"
-            className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg hover:text-2xl"
-          >
-            Dashboard
-          </Link>
-        </div>
-        <div>
-          <Link
-            to="/problems"
-            className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg hover:text-2xl"
-          >
-            Problems
-          </Link>
-        </div>
-        <div>
-          <Link
-            to="/Leaderboard"
-            className="no-underline mx-4 text-[#F0F0F0] font-bold text-lg hover:text-2xl"
-          >
-            Leaderboard
-          </Link>
-        </div>
+        {user && !userIsAdmin ? (
+          <div>
+            <Link
+              to="/"
+              className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg hover:text-2xl"
+            >
+              Dashboard
+            </Link>
+          </div>
+        ) : null}
+        {userIsAdmin ? (
+          user ? (
+            <div>
+              <Link
+                to="/problems"
+                className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg hover:text-2xl"
+              >
+                Update/Delete problems
+              </Link>
+            </div>
+          ) : null
+        ) : user ? (
+          <div>
+            <Link
+              to="/problems"
+              className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg hover:text-2xl"
+            >
+              Problems
+            </Link>
+          </div>
+        ) : null}
+        {user ? (
+          <div>
+            <Link
+              to="/Leaderboard"
+              className="no-underline mx-4 text-[#F0F0F0] font-bold text-lg hover:text-2xl"
+            >
+              Leaderboard
+            </Link>
+          </div>
+        ) : null}
+
         <div className="relative">
           {user ? (
             <div className="w-6 mx-2" onClick={toggleDropdown}>
@@ -72,12 +91,11 @@ export default function Header() {
             </div>
           ) : (
             <div>
-              
               <Link
                 to="/login"
                 className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg"
               >
-               Login
+                Login
               </Link>
             </div>
           )}

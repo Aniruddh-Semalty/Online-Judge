@@ -9,6 +9,7 @@ import Error from "./Error";
 import { Signup } from "./Signup";
 import PostProblems from "./PostProblems";
 
+
 import { lazy, Suspense } from "react";
 import { Provider } from "react-redux";
 import appStore from "../../utils/Store/appStore";
@@ -16,7 +17,7 @@ import appStore from "../../utils/Store/appStore";
 const Problems=lazy(()=>import("./Problems"));
 
 const GetProblem=lazy(()=>import("./GetProblem"));
-
+const UpdateProblem=lazy(()=>import("./UpdateProblem"));
  function App() {
   return (
     <div className="w-full">
@@ -59,8 +60,16 @@ const GetProblem=lazy(()=>import("./GetProblem"));
         path:"/problem/:problemId",
         element:(
         <Suspense fallback={<h1>Loading...</h1>}>
-        <GetProblem/>
+         <GetProblem/>
+       
         </Suspense>
+        )
+      },{
+        path:"/update/:problemId",
+        element:(
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <UpdateProblem/>
+          </Suspense>
         )
       }
       ,{

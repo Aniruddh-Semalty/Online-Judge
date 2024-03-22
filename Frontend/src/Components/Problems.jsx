@@ -3,15 +3,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {  useSelector,useDispatch } from 'react-redux';
 import useAuthentication from "../../utils/hooks/useAuthentication";
-import { login } from "../../utils/Store/userSlice";
+import { getRole, login } from "../../utils/Store/userSlice";
 const Problems = () => {
   const [problems, setProblems] = useState([]);
   const dispatch=useDispatch();
   const user=useSelector((store)=>store.user.userData);
+  
   useEffect(() => {
     useAuthentication().then((data)=>{
     
-            dispatch(login(data));
+            dispatch(login(data.userName));
+            dispatch(getRole(data.isAdmin))
     })
     fetchProblems();
   }, []);
@@ -50,12 +52,15 @@ const DisplayProblem = ({ details, index }) => {
   else{
     textColor="text-yellow-700"
   }
- 
-
+  const isAdmin=useSelector((store)=>store.user.isAdmin);
+  
+ let url;
+{!isAdmin?url=`/problem/${details._id}`:url=`/update/${details._id}`}
   return (
+    
     <Link
       className="no-underline font-bold  text-[#202020]"
-      to={`/problem/${details._id}`}
+      to={url}
     >
       <div className="my-6 border-b-4 shadow-sm p-2">
         <div className="flex justify-between items-center p-2">

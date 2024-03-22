@@ -28,9 +28,11 @@ problemRouter.get("/:id",async(req,res)=>{
     
     try{
     const problem=await Problem.findOne({_id:probId});
-    const submission=await Submission.findOne({})
+    const  probTestcases=await testcases.findOne({ problemId:probId});
+   
+    // const submission=await Submission.findOne({})
     res.status(200).json({
-        msg:"success",problemDetails:problem
+        msg:"success",problemDetails:problem,probTestcases
     })
     }
     catch(error)
@@ -44,24 +46,57 @@ problemRouter.get("/:id",async(req,res)=>{
   
   })
 
+  problemRouter.put("/:id",async(req,res)=>{
+    
+    const probId=req.params.id;
+    const  {problemName,problemStatement,difficultyLevel,expectedInput,expectedOutput}=req.body;
+    const updatedProblem=await Problem.findOneAndUpdate({_id:probId},{
+        Name:problemName,
+        Statement:problemStatement,
+        Difficulty:difficultyLevel,
+    },{new:true});
+    let updatedTestcase;
+    if((typeof(expectedInput)==="string" && typeof(expectedOutput)==="string"))
+    {
+    const expectedInputArr=expectedInput.split(/[,\n]/);
+    const expectedOutputArr=expectedOutput.split(/[,\n]/);
+  
+     updatedTestcase=await testcases.findOneAndUpdate({problemId:probId},{
+            input:expectedInputArr,
+            output:expectedOutputArr,
+    },{new:true});
+}
+else{
+updatedTestcase=await testcases.findOne({problemId:probId});
+}
+
+    res.status(200).json({  msg:"success",problem:updatedProblem,testcase:updatedTestcase});
+}
+
+);
+
 problemRouter.post("/",async(req,res)=>{
-    const  {problemName,problemStatement,difficultyLevel,solutionCode,testcasesInput,testcasesOutput}=req.body;
+    const  {problemName,problemStatement,difficultyLevel,expectedInput,expectedOutput}=req.body;
     const problemToAdd=new Problem({
         Name:problemName,
         Statement:problemStatement,
         Difficulty:difficultyLevel,
-        Code:solutionCode,
+      
        
     })
     
     const response=await problemToAdd.save();
    
     const problemId=await response._id;
-
+    
+    const expectedInputArr=expectedInput.split(/[,\n]/);
+    const expectedOutputArr=expectedOutput.split(/[,\n]/);
+    console.log(expectedInputArr);
+    console.log(expectedOutputArr);
     const testcaseToAdd=new testcases({
         problemId:problemId,
-        input:testcasesInput,
-        output:testcasesOutput,
+        input:expectedInputArr,
+        output:expectedOutputArr,
     })
     const testcaseResponse=await testcaseToAdd.save();
    
@@ -72,5 +107,15 @@ problemRouter.post("/",async(req,res)=>{
     }
     
 })
+problemRouter.delete("/:id",async(req,res)=>{
+    const probId=req.params.id;
+    console.log(probId);
+    await Problem.deleteOne({_id:probId});
+    await Submission.delteOne({problemId:probId});
+    await testcases.deleteOne({problemId:probId});
+     res.status(200).json({msg:"success"});
+
+})
+
 
 export default problemRouter;

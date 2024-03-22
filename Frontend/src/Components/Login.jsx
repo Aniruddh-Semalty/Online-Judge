@@ -1,50 +1,59 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { loginSchema } from "./validation/loginSchema.jsx";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../utils/Store/userSlice.js";
-import Cookies from "js-cookie"
-
+import Cookies from "js-cookie";
+import { getRole } from "../../utils/Store/userSlice.js";
 
 export default function Login() {
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const initialUserData = {
     userName: "",
     password: "",
   };
+  const [loginError,setLoginError]=useState(null);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialUserData,
       validationSchema: loginSchema,
       onSubmit: async (values, action) => {
+
+          try{
         
-        try {
           const response = await axios.post("http://localhost:3000/login", {
             values,
           });
-          if(response.status==200)
-          {
-           
-            Cookies.set("token",response.data.token,{expires:7,path: '/'});
+
+          if (response.status == 200) {
+            Cookies.set("token", response.data.token, {
+              expires: 7,
+              path: "/",
+            });
+            dispatch(login(response.data.userName));
+            dispatch(getRole(response.data.isAdmin));
+
+            navigate("/");
           }
-          dispatch(login(response.data.userName));
-          navigate("/");
-        } catch (error) {
-          console.log(error);
         }
+        catch(error)
+        {
+          setLoginError(error.response.data.message);
+        }
+        
       },
     });
 
   return (
     <section>
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-center items-center m-20">
-          <div className=" border p-16 w-[400px] border-white flex flex-col justify-center items-center bg-gray-200 ">
+        <div className="flex justify-center items-center md:m-20 ">
+          <div className=" border p-16 w-full md:w-[400px] border-white flex flex-col justify-center items-center bg-gray-200 ">
             <div className="w-full">
               <label className="w-full">
                 <input
@@ -58,7 +67,9 @@ export default function Login() {
                 />
               </label>
               {errors.userName && touched.userName ? (
-                <p className="form-error">{errors.userName}</p>
+                <div className="w-full">
+                  <p className="text-sm text-red-600">{errors.userName}</p>
+                </div>
               ) : null}
             </div>
             <div className="w-full">
@@ -74,7 +85,9 @@ export default function Login() {
                 />
               </label>
               {errors.password && touched.password ? (
-                <p className="form-error">{errors.password}</p>
+                <div className="w-full">
+                  <p className="text-sm text-red-600">{errors.password}</p>
+                </div>
               ) : null}
             </div>
             <div className="w-full">
@@ -85,13 +98,19 @@ export default function Login() {
               />
             </div>
             <div>
+            <p className="text-sm text-red-600">{loginError}</p> 
+            </div>
+            <div>
               <Link
                 to="/signup"
                 className="no-underline text-gray-600 shadow-lg"
               >
-                <div className="">New here ?<span className="text-[#202020]"> Signup</span></div>
+                <div className="">
+                  New here ?<span className="text-[#202020]"> Signup</span>
+                </div>
               </Link>
             </div>
+            
           </div>
         </div>
       </form>

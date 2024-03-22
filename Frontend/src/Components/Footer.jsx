@@ -4,7 +4,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
   
   return (
-    <footer className="bg-gray-900 text-white py-4 flex-shrink-0">
+    <footer className="bg-[#202020] text-white py-4 ">
       <div className="container mx-auto text-center">
         <h6>Developed by Aniruddh semalty</h6>
         <p>{`Copyright ©  Code ${year}`}</p>

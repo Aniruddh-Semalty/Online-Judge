@@ -7,7 +7,10 @@ const useAuthentication=async()=>{
     const response=await axios.post("http://localhost:3000/authentication",{
         token,
     });
-  return (response.data.user.userName);
+    const userName=response.data.user.userName;
+    const isAdmin=response.data.user.isAdmin;
+   
+  return ({userName,isAdmin});
    
 
 }

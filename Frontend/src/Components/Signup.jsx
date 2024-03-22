@@ -7,7 +7,9 @@ import { useFormik } from "formik";
 
 import { SignupSchema } from "./validation/signupSchema.jsx";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 export const Signup = () => {
+  
   const navigate=useNavigate();
   const initialUserData = {
     firstName: "",
@@ -17,6 +19,7 @@ export const Signup = () => {
     password: "",
     confirmPassword: "",
   };
+  const [signupError,setSignupError]=useState(null);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -27,18 +30,19 @@ export const Signup = () => {
           const response = await axios.post("http://localhost:3000/signup", {
             values,
           });
-          console.log(response);
+          alert("User signed up successfully");
           navigate("/login");
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+         
+          setSignupError(error.response.data.message);
         }
       },
     });
   return (
     <section>
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-center items-center my-6 ">
-          <div className=" border p-16 w-[400px] border-white flex flex-col justify-center items-center bg-gray-200 rounded-md ">
+        <div className="flex justify-center items-center md:my-6 ">
+          <div className=" border p-16 w-full md:w-[400px] border-white flex flex-col justify-center items-center bg-gray-200 rounded-md ">
             <label className="w-full">
             <input
                 className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
@@ -53,7 +57,8 @@ export const Signup = () => {
               </label>
           
             {errors.firstName && touched.firstName ? (
-              <p className="form-error">{errors.firstName}</p>
+              <div className="w-full">
+              <p className="text-sm text-red-600">{errors.firstName}</p></div>
             ) : null}
             <label className="w-full" >
              
@@ -69,9 +74,10 @@ export const Signup = () => {
               />
             </label>
             {errors.lastName && touched.lastName ? (
-              <p className="form-error">{errors.lastName}</p>
+              <div className="w-full">
+              <p className="text-sm text-red-600">{errors.lastName}</p></div>
             ) : null}
-            <label className="w-full" >
+            <label className="w-full">
              
               <input
                  className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
@@ -85,7 +91,8 @@ export const Signup = () => {
               />
             </label>
             {errors.userName && touched.userName ? (
-              <p className="form-error">{errors.userName}</p>
+              <div className="w-full">
+              <p className="text-sm text-red-600">{errors.userName}</p></div>
             ) : null}
             <label className="w-full">
            
@@ -101,7 +108,8 @@ export const Signup = () => {
               />
             </label >
             {errors.email && touched.email ? (
-              <p className="form-error">{errors.email}</p>
+              <div className="w-full">
+              <p className="text-sm text-red-600">{errors.email}</p></div>
             ) : null}
             <label className="w-full" >
             
@@ -117,7 +125,8 @@ export const Signup = () => {
               />
             </label>
             {errors.password && touched.password ? (
-              <p className="form-error">{errors.password}</p>
+              <div className="w-full">
+              <p className="text-sm text-red-600">{errors.password}</p></div>
             ) : null}
             <label className="w-full">
             
@@ -133,10 +142,14 @@ export const Signup = () => {
               />
             </label>
             {errors.confirmPassword && touched.confirmPassword ? (
-              <p className="form-error">{errors.confirmPassword}</p>
+              <div className="w-full">
+              <p className="text-sm text-red-600">{errors.confirmPassword}</p></div>
             ) : null}
             <div className="w-full">
             <input type="submit"  className="bg-[#202020] text-[#F0F0F0] w-full h-10 rounded-lg my-4 " value="Sign up" />
+            </div>
+            <div>
+            <p className="text-sm text-red-600">{signupError}</p>  
             </div>
             <div>
             <Link

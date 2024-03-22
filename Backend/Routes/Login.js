@@ -14,14 +14,15 @@ loginRouter.post("/", async (req, res) => {
     if (isPasswordCorrect) {
       const token = await createSecretJwtToken(
         isUserExist._id,
-        isUserExist.userName
+        isUserExist.userName,
+        isUserExist.isAdmin,
       );
      
       
-
+        const isAdmin=isUserExist.isAdmin;
       return res
         .status(200)
-        .json({ userName, message: "logged in successfully" ,token});
+        .json({ userName,isAdmin, message: "logged in successfully" ,token});
     } else {
       res.status(400).json({ message: "Please check your password" });
     }

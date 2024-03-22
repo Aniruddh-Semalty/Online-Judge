@@ -25,12 +25,18 @@ const userSchema = new Schema(
       required: [true, "Password is required"],
       index: true,
     },
+
     problemsSolved:[{
       type:Schema.Types.ObjectId,
       ref:"Problem",
       required:true,
       
-    }]
+    }],
+    isAdmin:{
+      type:Boolean,
+      required:true,
+      default:false,
+    }
   },
   {
     timestamps: true,
