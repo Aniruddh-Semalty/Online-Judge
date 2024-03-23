@@ -70,8 +70,8 @@ function GetProblem() {
   };
 
   return user ? (
-    <div className="p-2  mb-0 flex justify-between">
-      <div className="w-5/12  border-r-2 p-4 h-screen">
+    <div className="p-2  mb-0 md:flex md:justify-between ">
+      <div className="w-full md:w-5/12  border-r-2 p-4 h-auto">
         <div className="p-2 flex justify-between items-center my-14 mt-0 ">
           <p className="font-bold text-2xl">{problemName}</p>
           <div className="border shadow rounded-md">
@@ -79,7 +79,7 @@ function GetProblem() {
           </div>
         </div>
 
-        <p className="text-lg ">{problemStatement}</p>
+        <p className="text-lg">{problemStatement}</p>
         <div className="flex my-20">
           View last submission{" "}
           <svg
@@ -120,7 +120,7 @@ function GetProblem() {
         </section>
       </div>
 
-      <div className="w-7/12 m-2">
+      <div className="md:w-7/12 m-2">
         <Playground />
       </div>
     </div>

@@ -32,7 +32,7 @@ const Problems = () => {
     <div className="my-20 ">
       {problems.map((prob, index) => {
         return (
-          <div className="mx-28 bg-gray-200 ">
+          <div className="md:mx-28 bg-gray-200  ">
             <DisplayProblem details={prob} index={index} key={prob._id} />
           </div>
         );
@@ -62,9 +62,9 @@ const DisplayProblem = ({ details, index }) => {
       className="no-underline font-bold  text-[#202020]"
       to={url}
     >
-      <div className="my-6 border-b-4 shadow-sm p-2">
-        <div className="flex justify-between items-center p-2">
-          <p className="font-bold text-xl">
+      <div className="my-6 border-b-4 shadow-sm p-2 w-full">
+        <div className="flex justify-between items-center p-2 w-full">
+          <p className="font-bold md:text-xl text-sm">
             {index + 1}.{details.Name}
           </p>
 
