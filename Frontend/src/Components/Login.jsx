@@ -16,19 +16,20 @@ export default function Login() {
     userName: "",
     password: "",
   };
-  const [loginError,setLoginError]=useState(null);
+  const [loginError, setLoginError] = useState(null);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialUserData,
       validationSchema: loginSchema,
       onSubmit: async (values, action) => {
-
-          try{
-        
-          const response = await axios.post("http://localhost:3000/login", {
-            values,
-          });
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_API_PORT}login`,
+            {
+              values,
+            }
+          );
 
           if (response.status == 200) {
             Cookies.set("token", response.data.token, {
@@ -40,12 +41,9 @@ export default function Login() {
 
             navigate("/");
           }
-        }
-        catch(error)
-        {
+        } catch (error) {
           setLoginError(error.response.data.message);
         }
-        
       },
     });
 
@@ -98,7 +96,7 @@ export default function Login() {
               />
             </div>
             <div>
-            <p className="text-sm text-red-600">{loginError}</p> 
+              <p className="text-sm text-red-600">{loginError}</p>
             </div>
             <div>
               <Link
@@ -110,7 +108,6 @@ export default function Login() {
                 </div>
               </Link>
             </div>
-            
           </div>
         </div>
       </form>

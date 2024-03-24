@@ -36,14 +36,14 @@ else{
 
 if(ifAlreadySolved.length!=0)
 {
-    console.log("Problem already submitted");
+    
     return ;
 }
 else
 {
 user.problemsSolved.push(problemId);
 user.save().then(()=>{
-    console.log("Problem submitted successfully")
+   return;
 })
 
 

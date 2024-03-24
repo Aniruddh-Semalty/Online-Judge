@@ -8,7 +8,11 @@ import { useDispatch } from "react-redux";
 import { getRole, login } from "../../utils/Store/userSlice";
 import useAuthentication from "../../utils/hooks/useAuthentication";
 import Editor from "react-simple-code-editor";
-import { disableWorkerMessageHandler, highlight, languages } from "prismjs/components/prism-core";
+import {
+  disableWorkerMessageHandler,
+  highlight,
+  languages,
+} from "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism.css";
@@ -27,7 +31,7 @@ function GetProblem() {
   useEffect(() => {
     useAuthentication().then((data) => {
       dispatch(login(data.userName));
-      dispatch(getRole(data.isAdmin))
+      dispatch(getRole(data.isAdmin));
     });
     fetchProblem();
   }, []);
@@ -38,7 +42,7 @@ function GetProblem() {
   const username = useSelector((store) => store.user.userData);
   const fetchProblem = async () => {
     const response = await axios.get(
-      `http://localhost:3000/problem/${problemId}`
+      `${import.meta.env.VITE_API_PORT}problem/${problemId}`
     );
 
     const { Difficulty, Name, Statement } = response.data.problemDetails;
@@ -57,10 +61,13 @@ function GetProblem() {
     textColor = "text-yellow-700";
   }
   const getSubmissionHandler = async () => {
-    const response = await axios.post("http://localhost:3000/getsubmission", {
-      username,
-      problemId,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_PORT}getsubmission`,
+      {
+        username,
+        problemId,
+      }
+    );
 
     setLastSubmission(response.data.submission);
   };
@@ -82,16 +89,18 @@ function GetProblem() {
         <p className="text-lg">{problemStatement}</p>
         <div className="flex my-20">
           View last submission{" "}
-          <svg
-            className="w-6"
-            onClick={toggleSubmissionHandler}
-            xmlns="http://www.w3.org/2000/svg"
-            data-name="Layer 1"
-            viewBox="0 0 24 24"
-            id="down-arrow"
-          >
-            <path d="M17.71,11.29a1,1,0,0,0-1.42,0L13,14.59V7a1,1,0,0,0-2,0v7.59l-3.29-3.3a1,1,0,0,0-1.42,1.42l5,5a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l5-5A1,1,0,0,0,17.71,11.29Z"></path>
-          </svg>
+          <div className="bg-gray-400 rounded-full mx-2 ">
+            <svg
+              className="w-6"
+              onClick={toggleSubmissionHandler}
+              xmlns="http://www.w3.org/2000/svg"
+              data-name="Layer 1"
+              viewBox="0 0 24 24"
+              id="down-arrow"
+            >
+              <path d="M17.71,11.29a1,1,0,0,0-1.42,0L13,14.59V7a1,1,0,0,0-2,0v7.59l-3.29-3.3a1,1,0,0,0-1.42,1.42l5,5a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l5-5A1,1,0,0,0,17.71,11.29Z"></path>
+            </svg>
+          </div>
         </div>
         <section>
           <div className="w-full">

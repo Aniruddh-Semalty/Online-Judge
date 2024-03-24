@@ -34,8 +34,7 @@ export default function Header() {
             to="/"
             className="no-underline  md:text-3xl text-[#F0F0F0] font-extrabold text-xl"
           >
-          
-          {import.meta.env.VITE_APP_NAME}
+            {import.meta.env.VITE_APP_NAME}
           </Link>
         </div>
 
@@ -52,16 +51,16 @@ export default function Header() {
                 </Link>
               </div>
             ) : null}
-            {userIsAdmin? (
-                <div>
-                  <Link
-                    to="/addproblem"
-                    className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg"
-                  >
-                    Add a problem
-                  </Link>
-                </div>
-              ):null}
+            {userIsAdmin ? (
+              <div>
+                <Link
+                  to="/addproblem"
+                  className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg"
+                >
+                  Add a problem
+                </Link>
+              </div>
+            ) : null}
             {userIsAdmin ? (
               user ? (
                 <div>
@@ -169,16 +168,16 @@ export default function Header() {
                 </Link>
               </div>
             ) : null}
-            {userIsAdmin? (
-                <div className="mb-2">
-                  <Link
-                    to="/addproblem"
-                    className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg"
-                  >
-                    Add a problem
-                  </Link>
-                </div>
-              ):null}
+            {userIsAdmin ? (
+              <div className="mb-2">
+                <Link
+                  to="/addproblem"
+                  className="no-underline mx-2 text-[#F0F0F0] font-bold text-lg"
+                >
+                  Add a problem
+                </Link>
+              </div>
+            ) : null}
             {userIsAdmin ? (
               user ? (
                 <div className="">
@@ -224,5 +223,3 @@ export default function Header() {
     </div>
   );
 }
-
-

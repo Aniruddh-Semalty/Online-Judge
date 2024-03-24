@@ -91,8 +91,7 @@ problemRouter.post("/",async(req,res)=>{
     
     const expectedInputArr=expectedInput.split(/[,\n]/);
     const expectedOutputArr=expectedOutput.split(/[,\n]/);
-    console.log(expectedInputArr);
-    console.log(expectedOutputArr);
+   
     const testcaseToAdd=new testcases({
         problemId:problemId,
         input:expectedInputArr,
@@ -109,7 +108,7 @@ problemRouter.post("/",async(req,res)=>{
 })
 problemRouter.delete("/:id",async(req,res)=>{
     const probId=req.params.id;
-    console.log(probId);
+  
     await Problem.deleteOne({_id:probId});
     await Submission.delteOne({problemId:probId});
     await testcases.deleteOne({problemId:probId});
