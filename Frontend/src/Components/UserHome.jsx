@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 const UserHome = () => {
   const user = useSelector((store) => store.user.userData);
+  const userIsAdmin = useSelector((store) => store.user.isAdmin);
 
   const [problemsSolved, setProblemsSolved] = useState(null);
   const [totalProblems, setTotalProblems] = useState(null);
@@ -19,7 +20,7 @@ const UserHome = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  return (
+  return !userIsAdmin?(
     <div className="h-auto  flex justify-center  ">
       <div className="mt-10 w-9/12 md:w-1/2 flex-col ">
         <div className="text-center">
@@ -55,7 +56,18 @@ const UserHome = () => {
         </div>
       </div>
     </div>
-  );
+  ):(  <div className="h-auto  flex justify-center  ">
+      <div className="mt-20 md:mt-72 w-9/12 md:w-1/2 flex-col ">
+        <div className="text-center">
+          <h1 className="text-3xl md:text-5xl font-serif text-[#202020]">
+            Welcome {user}
+          </h1>
+          <h1 className="mt-10 md:mt-20 text-xl md:text-3xl font-serif text-[#202020]">
+            You have admin rights
+          </h1>
+        </div>
+        </div>
+        </div>)
 };
 
 export default UserHome;

@@ -34,7 +34,7 @@ export default function Header() {
             to="/"
             className="no-underline  md:text-3xl text-[#F0F0F0] font-extrabold text-xl"
           >
-            {import.meta.env.VITE_APP_NAME}
+            HASH CODE
           </Link>
         </div>
 

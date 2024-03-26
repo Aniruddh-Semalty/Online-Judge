@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const PostProblems = () => {
   const [problemName, setProblemName] = useState(" ");
   const [problemStatement, setProblemStatement] = useState(" ");
@@ -8,6 +9,7 @@ const PostProblems = () => {
   const [expectedInput, setExpectedInput] = useState(null);
   const [expectedOutput, setExpectedOutput] = useState(null);
   const user = useSelector((store) => store.user.userData);
+  const navigate = useNavigate();
   const clickHandler = async () => {
 
 
@@ -22,7 +24,8 @@ const PostProblems = () => {
           expectedOutput,
         }
       );
-      console.log(response);
+    alert("Problem added successfully");
+    navigate("/problems")
     } catch (e) {
       console.log(e);
     }

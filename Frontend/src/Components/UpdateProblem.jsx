@@ -40,12 +40,14 @@ const UpdateProblem = () => {
     setDifficultyLevel(response.data?.problem?.Difficulty);
     setExpectedInput(response.data?.testcase?.input);
     setExpectedOutput(response.data?.testcase?.output);
+    alert("Problem updated successfully");
+    navigate("/problems")
   };
   const deleteHandler = async () => {
     const response = await axios.delete(
       `${import.meta.env.VITE_API_PORT}problem/${problemId}`
     );
-   
+   alert("problem deleted successfully");
     navigate("/problems");
   };
   useEffect(() => {

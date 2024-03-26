@@ -58,7 +58,7 @@ export default function Login() {
                   type="text"
                   name="userName"
                   className=" p-3 text-sm border-gray-500 w-full h-12 rounded-md shadow-md my-2"
-                  placeholder="Username or Email"
+                  placeholder="Username "
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.userName}

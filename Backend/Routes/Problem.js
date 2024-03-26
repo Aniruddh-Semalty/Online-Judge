@@ -110,7 +110,7 @@ problemRouter.delete("/:id",async(req,res)=>{
     const probId=req.params.id;
   
     await Problem.deleteOne({_id:probId});
-    await Submission.delteOne({problemId:probId});
+    await Submission.deleteOne({problemId:probId});
     await testcases.deleteOne({problemId:probId});
      res.status(200).json({msg:"success"});
 

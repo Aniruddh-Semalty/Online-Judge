@@ -8,7 +8,7 @@ const outputDirPath = path.join(__dirname, "outputs");
 
 export const cleanup = () => {
   return new Promise((resolve, reject) => {
-    exec(`rmdir /s /q ${outputDirPath}`, (error, stderr, stdout) => {
+    exec(`if [ -d "${outputDirPath}" ]; then rm -rf ${outputDirPath}; fi`, (error, stderr, stdout) => {
       if (error) {
         reject(error);
       } else if (stderr) {
