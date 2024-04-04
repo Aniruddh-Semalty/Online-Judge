@@ -1,6 +1,7 @@
 import User from "../Models/user.model.js";
 import Submission from "../Models/submission.model.js"
 const submitProblem=async(problemId,username,code)=>{
+    try{
 const user=await User.findOne({
     userName:username,
 })
@@ -50,5 +51,7 @@ user.save().then(()=>{
 }
 }
 
+}catch(e){
+    console.log(e)}
 }
 export default submitProblem;

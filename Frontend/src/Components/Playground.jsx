@@ -103,7 +103,7 @@ function Playground() {
               outline: "none",
               border: "none",
               backgroundColor: "#f7fafc",
-              height: "100%",
+              height: "100",
               overflowY: "auto",
             }}
           />
