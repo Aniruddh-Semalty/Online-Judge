@@ -44,8 +44,9 @@ function Playground() {
       }
     );
 
-    await setTheOutputDiv(response.data.output);
-
+    let result = response.data.output;
+    if (typeof result == "string") await setTheOutputDiv(response.data.output);
+    else await setTheOutputDiv("Syntax Error occured");
     await setLoading(false);
     setDisabled(false);
   };
@@ -90,7 +91,7 @@ function Playground() {
           <option value="java">Java</option>
           <option value="py">Python</option>
         </select>
-        <div>
+        <div className="h-auto">
           <Editor
             value={code}
             className="h-auto drop-shadow-lg"
