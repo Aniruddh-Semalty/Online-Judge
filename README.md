@@ -5,7 +5,7 @@
 HashCode is an online judge application designed to provide programmers with a platform to solve coding problems and receive immediate feedback on their solutions.It allows users to check their code against custom inputs before finally submitting it for evaluation. After successfully solving the problem their submission gets stored for future reference. It offers a user-friendly interface, advanced code editor, custom test case evaluation, and administrative features for managing problem statements and user accounts.It is also available for different screen sizes.
 
 ## LIVE URL 
-https://hash-code-zeta.vercel.app/
+https://hash-code-nine.vercel.app/
 
 -if you face any issues try to change site settings and allow insecure sites/content in your browser.
 
